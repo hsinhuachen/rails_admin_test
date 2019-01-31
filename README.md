@@ -1,24 +1,65 @@
-# README
+project
+	title:text
+	title_en:text
+	desc:text
+	desc_en:text
+	thumb:text
+	url:text
+	video:string
+	gallery:text
+	category:string
+	feature:string
+	published:integer
+	sorting:integer
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+	Montserrat
+	noto
 
-Things you may want to cover:
+rails generate model Project title:text title_en:text desc:text desc_en:text thumb:text url:text video:string gallery:text category:string feature:string published:integer sorting:integer
 
-* Ruby version
+rails generate trestle:resource Project
 
-* System dependencies
+// test --------------------
+rails generate scaffold Post name:string title:string content:text
 
-* Configuration
+rails console 
+Administrator.create(email: "kevin@oniondesign.com.tw", password: "onion9394", first_name: "hsinhua", last_name: "chen")
 
-* Database creation
+// /lib/trestle/form/fields.rb
+autoload :DatePicker
 
-* Database initialization
+autoload :CheckBox
+autoload :CollectionCheckBoxes
+autoload :CollectionRadioButtons
+autoload :CollectionSelect
+autoload :ColorField
+autoload :DateField
+autoload :DateSelect
+autoload :DatetimeField
+autoload :DatetimeSelect
+autoload :EmailField
+autoload :FileField
+autoload :GroupedCollectionSelect
+autoload :MonthField
+autoload :NumberField
+autoload :RadioButton
+autoload :RangeField
+autoload :SearchField
+autoload :Select
+autoload :StaticField
+autoload :TagSelect
+autoload :TelephoneField
+autoload :TextArea
+autoload :TextField
+autoload :TimeField
+autoload :TimeSelect
+autoload :TimeZoneSelect
+autoload :UrlField
+autoload :PasswordField
+autoload :WeekField
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+// add tag
+https://www.spreered.com/rails-tagging-using-select2/
 
-* Deployment instructions
-
-* ...
+rails g model tagging tag:belongs_to project:belongs_to
