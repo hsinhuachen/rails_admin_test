@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyText
+  title_en: MyText
+  desc: MyText
+  desc_en: MyText
+  thumb: MyText
+  url: MyText
+  video: MyString
+  gallery: MyText
+  category: MyString
+  feature: MyString
+  sorting: 1
+
+two:
+  title: MyText
+  title_en: MyText
+  desc: MyText
+  desc_en: MyText
+  thumb: MyText
+  url: MyText
+  video: MyString
+  gallery: MyText
+  category: MyString
+  feature: MyString
+  sorting: 1
