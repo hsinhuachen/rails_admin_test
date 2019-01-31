@@ -23,7 +23,7 @@ rails generate trestle:resource Project
 rails generate scaffold Post name:string title:string content:text
 
 rails console 
-Administrator.create(email: "kevin@oniondesign.com.tw", password: "onion9394", first_name: "hsinhua", last_name: "chen")
+Administrator.create(email: "**@gmal.com", password: "******", first_name: "hsinhua", last_name: "chen")
 
 // /lib/trestle/form/fields.rb
 autoload :DatePicker
