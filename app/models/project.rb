@@ -1,6 +1,7 @@
 class Project < ApplicationRecord
 	has_many :taggings
 	has_many :tags, through: :taggings
+	has_one_attached :avatar
 
 	def tag_list
 	    tags.map(&:name).join(', ')
