@@ -19,8 +19,16 @@ Trestle.resource(:projects) do
   # Customize the form fields shown on the new/edit views.
   #
   form do |project|
-    text_field :title, label: "標題", autocomplete: "off"
-    editor     :desc
+    tab "中文" do
+      text_field :title, label: "標題", autocomplete: "off"
+      editor     :desc
+    end
+
+    tab "英文" do
+      text_field :title_en, label: "標題", autocomplete: "off"
+      editor     :desc_en
+    end
+
     tag_select :tag_items
     # form_group :thumb, help: "Upload a file less than 2MB." do
     #   # concat image_tag(project.thumb.url) if project.thumb
@@ -118,7 +126,7 @@ Trestle.resource(:projects) do
   #   http://guides.rubyonrails.org/action_controller_overview.html#strong-parameters
   #
   params do |params|
-    params.require(:project).permit(:title,:desc,:tag_list)
+    params.require(:project).permit(:title,:desc, :title_en, :desc_en,:tag_list)
     # params.require(:project).permit(:title, :desc, { tag_items: [] } )
   end
 end
