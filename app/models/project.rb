@@ -1,7 +1,8 @@
 class Project < ApplicationRecord
 	has_many :taggings
 	has_many :tags, through: :taggings
-	has_one_attached :avatar
+	# has_one_attached :avatar
+	mount_uploader :thumb, AvatarUploader
 
 	def tag_list
 	    tags.map(&:name).join(', ')
@@ -16,4 +17,5 @@ class Project < ApplicationRecord
    	def tag_items
 		tags.map(&:name)
 	end
+
 end

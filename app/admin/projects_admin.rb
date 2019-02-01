@@ -1,7 +1,7 @@
 Trestle.resource(:projects) do
-  active_storage_fields do
-    [:avatar]
-  end
+  # active_storage_fields do
+  #   [:avatar]
+  # end
 
   menu do
     item :projects, icon: "fa fa-star"
@@ -33,11 +33,14 @@ Trestle.resource(:projects) do
     end
 
     tag_select :tag_items
-    active_storage_field :avatar
-    # form_group :thumb, help: "Upload a file less than 2MB." do
-    #   # concat image_tag(project.thumb.url) if project.thumb
-    #   raw_file_field :thumb
-    # end
+    # active_storage_field :avatar
+
+    # file_field :thumb
+    form_group :thumb, help: "Upload a file less than 2MB." do
+      concat image_tag(project.thumb.url) if project.thumb
+      # check_box :remove_image
+      raw_file_field :thumb
+    end
     # text_area  :desc
     # select     :feature, ["yes","no"]
     # form_group :feature, label: "Radio Buttons Form Group" do
@@ -130,7 +133,7 @@ Trestle.resource(:projects) do
   #   http://guides.rubyonrails.org/action_controller_overview.html#strong-parameters
   #
   params do |params|
-    params.require(:project).permit(:title,:desc, :title_en, :desc_en,:tag_list, :avatar)
+    params.require(:project).permit(:title,:desc, :title_en, :desc_en,:tag_list, :thumb)
     # params.require(:project).permit(:title, :desc, { tag_items: [] } )
   end
 end
