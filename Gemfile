@@ -45,6 +45,8 @@ gem 'trestle-tinymce'
 gem 'trestle-active_storage'
 
 gem 'carrierwave', '~> 1.0'
+# gem 'rmagick', '~> 2.16'
+gem "mini_magick"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

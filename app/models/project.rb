@@ -23,4 +23,7 @@ class Project < ApplicationRecord
 	      (id =~ /^\d+$/) ? Tag.find(id) : Tag.new(name: id)
 	    }
 	end
+
+	def remove_image
+	end
 end

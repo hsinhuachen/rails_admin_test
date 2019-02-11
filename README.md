@@ -28,6 +28,13 @@ https://www.spreered.com/rails-tagging-using-select2/
 
 rails g model tagging tag:belongs_to project:belongs_to
 
+sudo brew install libmagickcore-dev
+sudo brew install graphicsmagick-libmagick-dev-compat
+sudo brew install libmagickwand-dev
+sudo brew install imagemagick
+gem install rmagick
+
+gem install rmagick -v '2.16.0' --source 'https://rubygems.org/'
 
 ------------------------------
 
