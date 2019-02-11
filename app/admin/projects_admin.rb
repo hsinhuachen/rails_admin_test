@@ -32,12 +32,13 @@ Trestle.resource(:projects) do
       editor     :desc_en
     end
 
-    tag_select :tag_items
+    # tag_select :tag_items
+    select :tag_ids, Tag.all, { label: "category" }, { multiple: true, data: { tags: true } }
     # active_storage_field :avatar
 
     # file_field :thumb
     form_group :thumb, help: "Upload a file less than 2MB." do
-      concat image_tag(project.thumb.url) if project.thumb
+      concat image_tag(project.thumb.url) if project.thumb.url
       # check_box :remove_image
       raw_file_field :thumb
     end
@@ -56,70 +57,6 @@ Trestle.resource(:projects) do
     end
   end
 
-  controller do
-    # def create
-    #   post_params = params["project"]
-    #   project = Project.new(post_params[:id])
-    #   project.tag_list = post_params[:tag_items]
-
-    #   self.instance = admin.build_instance(admin.permitted_params(params), params)
-
-    #   if admin.save_instance(instance, params)
-    #     respond_to do |format|
-    #       format.html do
-    #         flash[:message] = flash_message("create.success", title: "Success!", message: "The %{lowercase_model_name} was successfully created.")
-    #         redirect_to_return_location(:create, instance, default: admin.instance_path(instance))
-    #       end
-    #       format.json { render json: instance, status: :created, location: admin.instance_path(instance) }
-    #       format.js
-    #     end
-    #   else
-    #     respond_to do |format|
-    #       format.html do
-    #         flash.now[:error] = flash_message("create.failure", title: "Warning!", message: "Please correct the errors below.")
-    #         render "new", status: :unprocessable_entity
-    #       end
-    #       format.json { render json: instance.errors, status: :unprocessable_entity }
-    #       format.js
-    #     end
-    #   end
-    # end
-
-    def update
-      project = admin.find_instance(params)
-      post_params = params["project"]
-      project.tag_list = post_params[:tag_items]
-      # project.tag_list = "66, 88"
-
-      # lib/trestle/resource/controller.rb
-      admin.update_instance(instance, admin.permitted_params(params), params)
-
-      if admin.save_instance(instance, params)
-        respond_to do |format|
-          format.html do
-            flash[:message] = flash_message("update.success", title: "Success!", message: "The %{lowercase_model_name} was successfully updated.")
-            redirect_to_return_location(:update, instance, default: admin.instance_path(instance))
-          end
-          format.json { render json: instance, status: :ok }
-          format.js
-        end
-      else
-        respond_to do |format|
-          format.html do
-            flash.now[:error] = flash_message("update.failure", title: "Warning!", message: "Please correct the errors below.")
-            render "show", status: :unprocessable_entity
-          end
-          format.json { render json: instance.errors, status: :unprocessable_entity }
-          format.js
-        end
-      end
-
-      # aa = params["project"][:tag_items]
-      # logger.debug "params tag_list 3 = #{aa}"
-     end
-
-  end
-
   # routes do
   #   post :launch
   # end
@@ -132,8 +69,8 @@ Trestle.resource(:projects) do
   # For further information, see the Rails documentation on Strong Parameters:
   #   http://guides.rubyonrails.org/action_controller_overview.html#strong-parameters
   #
-  params do |params|
-    params.require(:project).permit(:title,:desc, :title_en, :desc_en,:tag_list, :thumb)
-    # params.require(:project).permit(:title, :desc, { tag_items: [] } )
+  def product_params
+    params.require(:project).permit(:title,:desc, :title_en, :desc_en, :tag_list, :thumb)
+    # params.require(:project).permit(:title,:desc, :title_en, :desc_en, :tag_ids, :thumb)
   end
 end

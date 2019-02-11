@@ -18,4 +18,9 @@ class Project < ApplicationRecord
 		tags.map(&:name)
 	end
 
+	def tag_ids=(ids)
+	    self.tags = Array(ids).reject(&:blank?).map { |id|
+	      (id =~ /^\d+$/) ? Tag.find(id) : Tag.new(name: id)
+	    }
+	end
 end
