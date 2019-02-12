@@ -36,7 +36,12 @@ gem install rmagick
 
 gem install rmagick -v '2.16.0' --source 'https://rubygems.org/'
 
-------------------------------
+-----------------------------
+
+rails g migration Project gallery:string
+rails g uploader ProjectGallery
+
+-----------------------------
 
 trestle admin
 carrierwave

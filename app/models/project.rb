@@ -3,6 +3,8 @@ class Project < ApplicationRecord
 	has_many :tags, through: :taggings
 	# has_one_attached :avatar
 	mount_uploader :thumb, AvatarUploader
+	mount_uploaders :gallery, GalleryUploader
+	serialize :gallery, JSON
 
 	def tag_list
 	    tags.map(&:name).join(', ')

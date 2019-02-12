@@ -38,10 +38,20 @@ Trestle.resource(:projects) do
 
     # file_field :thumb
     form_group :thumb, help: "Upload a file less than 2MB." do
-      concat image_tag(project.thumb.url) if project.thumb.url
+      concat image_tag(project.thumb.url(:s)) if project.thumb.url
       # check_box :remove_image
       raw_file_field :thumb
     end
+
+
+    form_group :gallery, help: "Upload a file less than 2MB." do
+      project.gallery.map do |img|
+        concat image_tag(img.url(:small)) if img
+      end
+      # check_box :remove_image
+      raw_file_field :gallery, :multiple => true, label: "Gallery"
+    end
+
     # text_area  :desc
     # select     :feature, ["yes","no"]
     # form_group :feature, label: "Radio Buttons Form Group" do
@@ -70,7 +80,7 @@ Trestle.resource(:projects) do
   #   http://guides.rubyonrails.org/action_controller_overview.html#strong-parameters
   #
   def product_params
-    params.require(:project).permit(:title,:desc, :title_en, :desc_en, :tag_list, :thumb)
+    params.require(:project).permit(:title,:desc, :title_en, :desc_en, :tag_list, :thumb, :gallery => [])
     # params.require(:project).permit(:title,:desc, :title_en, :desc_en, :tag_ids, :thumb)
   end
 end

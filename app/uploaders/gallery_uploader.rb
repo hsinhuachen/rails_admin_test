@@ -1,4 +1,4 @@
-class AvatarUploader < CarrierWave::Uploader::Base
+class GalleryUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
@@ -29,19 +29,35 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-  version :s do
-    process resize_to_fit: [250, 250]
+  version :small do
+     process resize_to_fit: [650, 650]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
-  def extension_whitelist
-    %w(jpg jpeg gif png)
-  end
+  # def extension_whitelist
+  #   %w(jpg jpeg gif png)
+  # end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  def filename
-    "thumb.jpg" if original_filename
+  # def filename
+  #   # "img.#{file.extension}" if original_filename
+  #   # @name ||= "#{timestamp}.jpg" if original_filename.present? and super.present?
+
+  #    # "#{secure_token(10)}.jpg" if original_filename.present?
+  #    # @name = "#{SecureRandom.hex(5)}.jpg" if original_filename.present?
+  # end
+
+  def timestamp
+    var = :"@#{mounted_as}_timestamp"
+    model.instance_variable_get(var) or model.instance_variable_set(var, Time.now.to_i)
   end
+
+  protected
+  def secure_token(length=16)
+    var = :"@#{mounted_as}_secure_token"
+    model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.hex(length/2))
+  end
+
 end
