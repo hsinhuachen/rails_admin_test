@@ -6,6 +6,7 @@ class Project < ApplicationRecord
 	mount_uploaders :gallery, GalleryUploader
 	serialize :gallery, JSON
 
+
 	def tag_list
 	    tags.map(&:name).join(', ')
 	end
@@ -27,5 +28,9 @@ class Project < ApplicationRecord
 	end
 
 	def remove_image
+	end
+
+	def featured
+		self.feature
 	end
 end

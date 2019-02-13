@@ -7,13 +7,21 @@ Trestle.resource(:projects) do
     item :projects, icon: "fa fa-star"
   end
 
+  scope :all, default: true
+  scope :published, -> { Project.where("feature = 1") }, label: "已發佈"
+  scope :unpublished, -> { Project.where("feature = 0") }, label: "未發佈"
+
+
   # Customize the table columns shown on the index view.
   #
   table do
       column :id
       column :title
-      column :desc
-      column :tag_list
+      # column :desc
+      column :tag_list, sort: false, header: "Tag"
+      column :published, align: :center, link: false, header: "精選專案" do |project|
+        status_tag(icon("fa fa-check"), :success) if project.featured=="1"
+      end
       column :created_at, align: :center
       column :updated_at, header: "Last Updated", align: :center
       actions
@@ -66,6 +74,10 @@ Trestle.resource(:projects) do
       col(xs: 6) { datetime_field :created_at }
     end
   end
+
+  # controller do 
+    
+  # end
 
   # routes do
   #   post :launch

@@ -8,7 +8,7 @@ project
 	video:string
 	gallery:text
 	category:string
-	feature:string
+	feature:integer
 	published:integer
 	sorting:integer
 
