@@ -30,7 +30,24 @@ class Project < ApplicationRecord
 	def remove_image
 	end
 
+	def checksorting
+		if !self.sorting
+			Project.maximum("sorting") + 10
+		else
+			self.sorting
+		end
+	end
+
+	def latest
+		# get maximun sorting
+		Project.maximum("sorting") + 10
+	end
+
 	def featured
 		self.feature
+	end
+
+	def published
+		self.status
 	end
 end

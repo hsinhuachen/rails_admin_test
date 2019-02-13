@@ -7,9 +7,10 @@ Trestle.resource(:projects) do
     item :projects, icon: "fa fa-star"
   end
 
-  scope :all, default: true
-  scope :published, -> { Project.where("feature = 1") }, label: "已發佈"
-  scope :unpublished, -> { Project.where("feature = 0") }, label: "未發佈"
+  scope :all, -> { Project.order("sorting desc") }, default: true
+  scope :feature, -> { Project.where("feature = 1") }, label: "精選專案"
+  scope :published, -> { Project.where("status = 1") }, label: "已發佈"
+  scope :unpublished, -> { Project.where("status = 0") }, label: "未發佈"
 
 
   # Customize the table columns shown on the index view.
@@ -22,6 +23,10 @@ Trestle.resource(:projects) do
       column :published, align: :center, link: false, header: "精選專案" do |project|
         status_tag(icon("fa fa-check"), :success) if project.featured=="1"
       end
+      column :status, align: :center, link: false, header: "發佈" do |project|
+        status_tag(icon("fa fa-check"), :success) if project.published==1
+      end
+      column :sorting, header: "前台排序", sort: false
       column :created_at, align: :center
       column :updated_at, header: "Last Updated", align: :center
       actions
@@ -45,14 +50,14 @@ Trestle.resource(:projects) do
     # active_storage_field :avatar
 
     # file_field :thumb
-    form_group :thumb, help: "Upload a file less than 2MB." do
+    form_group :thumb, label: "作品縮圖", help: "Upload a file less than 2MB." do
       concat image_tag(project.thumb.url(:s)) if project.thumb.url
       # check_box :remove_image
       raw_file_field :thumb
     end
 
 
-    form_group :gallery, help: "Upload a file less than 2MB." do
+    form_group :gallery, help: "Upload a file less than 2MB. 可上傳多張" do
       project.gallery.map do |img|
         concat image_tag(img.url(:small)) if img
       end
@@ -60,14 +65,9 @@ Trestle.resource(:projects) do
       raw_file_field :gallery, :multiple => true, label: "Gallery"
     end
 
-    # text_area  :desc
-    # select     :feature, ["yes","no"]
-    # form_group :feature, label: "Radio Buttons Form Group" do
-    #   radio_button :feature, "Red"
-    #   radio_button :feature, "Green"
-    #   radio_button :feature, "Blue"
-    #   radio_button :feature, nil, label: "No Color"
-    # end
+    check_box :status, label: "發佈文章"
+    check_box :feature, label: "精選文章"
+    text_field :sorting, label: "排序", placeholder: 0, value: project.checksorting
 
     row do
       col(xs: 6) { datetime_field :updated_at }

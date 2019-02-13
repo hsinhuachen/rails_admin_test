@@ -12,7 +12,7 @@ project
 	published:integer
 	sorting:integer
 
-rails generate model Project title:text title_en:text desc:text desc_en:text thumb:text url:text video:string gallery:text category:string feature:string published:integer sorting:integer
+rails generate model Project title:text title_en:text desc:text desc_en:text thumb:text url:text video:string gallery:text feature:integer published:integer sorting:integer
 
 rails generate trestle:resource Project
 
