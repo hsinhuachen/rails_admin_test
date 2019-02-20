@@ -1,10 +1,12 @@
 class Project < ApplicationRecord
-	has_many :taggings
+	has_many :taggings, dependent: :destroy
 	has_many :tags, through: :taggings
+	has_many :gallerys, dependent: :destroy
+	accepts_nested_attributes_for :gallerys
 	# has_one_attached :avatar
 	mount_uploader :thumb, AvatarUploader
-	mount_uploaders :gallery, GalleryUploader
-	serialize :gallery, JSON
+	# mount_uploaders :gallery, GalleryUploader
+	# serialize :gallerys
 
 
 	def tag_list
@@ -50,4 +52,21 @@ class Project < ApplicationRecord
 	def published
 		self.status
 	end
+
+ # 	def gallery_list
+	#     gallerys.map(&:id).join(', ')
+	# end
+
+	# def gallery_items
+	# 	gallerys.map(&:name)
+	# end
+
+	# def gallery_list=(ids)
+	# 	array_id = ids.split(', ')
+	# 	# logger.info "array = #{array_id}"
+	# 	# logger.info "-------------------"
+	# 	self.gallerys = array_id.reject(&:blank?).map { |id|
+	#       (id =~ /^\d+$/) ? Gallery.find(id) : Gallery.new(name: id)
+	#     }
+	# end
 end

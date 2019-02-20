@@ -6,10 +6,8 @@ project
 	thumb:text
 	url:text
 	video:string
-	gallery:text
-	category:string
-	feature:integer
-	published:integer
+	feature:boolean
+	published:boolean
 	sorting:integer
 
 rails generate model Project title:text title_en:text desc:text desc_en:text thumb:text url:text video:string gallery:text feature:integer published:integer sorting:integer
@@ -40,6 +38,14 @@ gem install rmagick -v '2.16.0' --source 'https://rubygems.org/'
 
 rails g migration Project gallery:string
 rails g uploader ProjectGallery
+rails g uploader Name
+
+-----------------------------
+
+Add Gallery
+rails g model gallery name:string sorting:integer project_id:integer
+
+http://yy4ever.logdown.com/posts/1069287
 
 -----------------------------
 
