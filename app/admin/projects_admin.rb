@@ -15,20 +15,29 @@ Trestle.resource(:projects) do
 
   # Customize the table columns shown on the index view.
   #
+  search do |query|
+    if query
+      Project.where("title LIKE ?", "%#{query}%")
+    else
+      Project.all
+    end
+  end
+
   table do
-      column :id
-      column :title
-      # column :desc
-      column :tag_list, sort: false, header: "Tag"
+      column :thumb, header: false, class: "thumbImg" do |img|
+        image_tag(img.thumb.url)
+      end
+      column :title, header: "標題"
+      column :tag_list, sort: false, header: "分類"
       column :published, align: :center, link: false, header: "精選專案" do |project|
         status_tag(icon("fa fa-check"), :success) if project.featured=="1"
       end
       column :status, align: :center, link: false, header: "發佈" do |project|
         status_tag(icon("fa fa-check"), :success) if project.published==1
       end
-      column :sorting, header: "前台排序", sort: false
-      column :created_at, align: :center
-      column :updated_at, header: "Last Updated", align: :center
+      column :sorting, header: "前台排序"
+      column :created_at, header: "建立時間", align: :center
+      column :updated_at, header: "最後更新時間", align: :center
       actions
   end
 
@@ -46,13 +55,22 @@ Trestle.resource(:projects) do
     end
 
     tab "Gallery" do
-      form_group :gallerys, label: false, help: "Upload a file less than 2MB. 可上傳多張" do
-        # concat(content_tag(:p, project.gallery_items))
-        # text_field :gallery_list
+      form_group :gallerys, label: false do
         raw_file_field :name, :multiple => true, name: "gallerys[name][]"
-      end
+        concat content_tag(:p, "Upload a file less than 2MB. 可上傳多張") 
 
-      # file_field :name, :multiple => true, label: "name", name: "gallerys[name][]"
+        hidden_field :delImg, name: "delImgStr"
+        galleryIds = project.gallery_ids
+        galleryIds.map do |id|
+          img = project.img_name(id)
+          row do
+            col(xs: 1) { concat content_tag(:p, id, class: "imgPanel") }
+            col(xs: 6) { concat content_tag(:div, image_tag(img.name.url), class: "imgPanel") if img.name }
+            col(xs: 5) { concat link_to "Remove image", "#", class: "delImg", data: { id: id , confirm: "Are you sure you want to delete this image?" } }
+          end   
+        end
+
+      end
 
       concat(content_tag(:div, content_tag(:img),class: "upload-preview"))
     end
@@ -87,11 +105,18 @@ Trestle.resource(:projects) do
       self.instance = admin.build_instance(admin.permitted_params(params), params) 
 
       if admin.save_instance(instance, params) 
+
+        # 新增至gallery
         if params[:gallerys] != nil
           params[:gallerys]['name'].each do |img|
             @picture = instance.gallerys.create("name" => img)
           end
         end
+
+        #刪除gallery
+
+
+
 
         respond_to do |format|  
           format.html do  
@@ -116,10 +141,19 @@ Trestle.resource(:projects) do
     def update
       admin.update_instance(instance, admin.permitted_params(params), params)
 
+      # 新增至gallery
       if params[:gallerys] != nil
         params[:gallerys]['name'].each do |img|
           @picture = instance.gallerys.create("name" => img)
         end
+      end
+
+      # 刪除gallery
+      delImgStr = params["delImgStr"]
+      delArray = delImgStr.split(',')
+
+      delArray.map do |delId|
+        Gallery.destroy(delId)     
       end
 
       if admin.save_instance(instance, params)  

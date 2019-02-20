@@ -7,7 +7,27 @@
 //    @import "trestle/custom/my_custom_css";
 //
 
+.thumbImg img{
+	max-width: 200px;
+	width: 100%;
+	height: auto;
+}
+
 .upload-preview{
 	width: 300px;
 	height: auto;
+}
+
+.imgPanel{
+	padding-top: 20px;
+}
+
+.imgPanel img{
+	width: 100%;
+	height: auto;
+}
+
+.delImg{
+	padding-top: 20px;
+	display: block;
 }

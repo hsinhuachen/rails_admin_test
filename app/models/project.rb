@@ -29,20 +29,13 @@ class Project < ApplicationRecord
 	    }
 	end
 
-	def remove_image
-	end
-
 	def checksorting
 		if !self.sorting
+			# get maximun sorting
 			Project.maximum("sorting") + 10
 		else
 			self.sorting
 		end
-	end
-
-	def latest
-		# get maximun sorting
-		Project.maximum("sorting") + 10
 	end
 
 	def featured
@@ -53,20 +46,14 @@ class Project < ApplicationRecord
 		self.status
 	end
 
- # 	def gallery_list
-	#     gallerys.map(&:id).join(', ')
-	# end
+	def gallery_items
+		gallerys.map(&:name).join(', ')
+	end
 
-	# def gallery_items
-	# 	gallerys.map(&:name)
-	# end
+	def img_name(id)
+		Gallery.find(id)
+	end
 
-	# def gallery_list=(ids)
-	# 	array_id = ids.split(', ')
-	# 	# logger.info "array = #{array_id}"
-	# 	# logger.info "-------------------"
-	# 	self.gallerys = array_id.reject(&:blank?).map { |id|
-	#       (id =~ /^\d+$/) ? Gallery.find(id) : Gallery.new(name: id)
-	#     }
-	# end
+	def delImg
+	end
 end

@@ -42,7 +42,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'trestle'
 gem 'trestle-auth'
 gem 'trestle-tinymce'
-gem 'trestle-active_storage'
+# gem 'trestle-active_storage'
+gem 'trestle-search'
 
 gem 'carrierwave', '~> 1.0'
 # gem 'rmagick', '~> 2.16'

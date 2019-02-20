@@ -44,4 +44,21 @@ $(function(){
 	// 		reader.readAsDataURL(file);
 	// 	} // end for
  //    });
+
+	$(document).on("click", ".delImg", function(){
+		var getId = $(this).data("id")
+		var curStr = $("#project_delImg").val();
+
+		$(this).parents(".row").fadeOut(300);
+
+		if(curStr == ""){
+			curStr = getId;
+		}else{
+			curStr = curStr + "," + getId;
+		}
+
+		$("#project_delImg").val(curStr);
+
+		event.preventDefault();
+	})
 })
