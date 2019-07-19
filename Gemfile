@@ -31,7 +31,6 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use ActiveStorage variant
-# gem 'mini_magick', '~> 4.8'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -47,7 +46,7 @@ gem 'trestle-search'
 
 gem 'carrierwave', '~> 1.0'
 # gem 'rmagick', '~> 2.16'
-gem 'mini_magick'
+gem 'mini_magick', ">= 4.9.4"
 
 gem 'hirb'
 
