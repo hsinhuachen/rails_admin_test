@@ -44,7 +44,7 @@ gem 'trestle-tinymce'
 # gem 'trestle-active_storage'
 gem 'trestle-search'
 
-gem 'carrierwave', '~> 1.0'
+gem 'carrierwave', '~> 1.3'
 # gem 'rmagick', '~> 2.16'
 gem 'mini_magick', ">= 4.9.4"
 
